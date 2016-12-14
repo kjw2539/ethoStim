@@ -62,16 +62,18 @@ class Trial:
         self.stimulus = stim
         #
         self.start = float(starttime)
-        self.tLength = 258
+        self.tLength = 20
         self.feedDelay = 10
+
+
+#############################
+	self.notch = 0.26
 	#
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.cleanup()
 	self.feeder = 17 ##
         self.notfeeder = 27 ##
-        #GPIO.setup(27, GPIO.IN)
-        #GPIO.add_event_detect(27, GPIO.RISING)
         GPIO.setup(self.feeder, GPIO.OUT)
         GPIO.output(self.feeder, True)
         GPIO.setup(self.notfeeder, GPIO.OUT)
@@ -185,27 +187,17 @@ class Trial:
 		    #if not fed:
                     #GPIO.setmode(BCM)
 		    #GPIO.setmode(GPIO.BCM)
-		    #GPIO.setup(17, GPIO.OUT)			
-		    #GPIO.output(17, False)
-	
-                 	#pygame.display.flip()
-              	 	#self.screen.blit(self.image, (0,0))
-      		 
-                 	#presented = True
-                    #if fed:
-    		        #pass
-                    #elif GPIO.event_detected(27):
-		        #time.sleep(1.0)
-		        #GPIO.output(17,True)
-                        #fed = True
-			#print "notfed, event detected"
-   		    #else:
+	       	    #else:
                       # time.sleep(1.0)
                     ## MATT: turn on either the feeder on the notfeeder here
                     if feed:
                         GPIO.output(self.feeder, False)
-                        GPIO.output(self.notfeeder, False)  
-		    else:
+                        GPIO.output(self.notfeeder, False)
+			time.sleep(self.notch)
+			GPIO.output(self.feeder, True)
+                        GPIO.output(self.notfeeder, True)
+			feed = False
+  		    else:
 
                        #print time.time()
 		        pass
